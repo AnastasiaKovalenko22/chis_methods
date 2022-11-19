@@ -7,14 +7,14 @@ def f(x):
 
 epsilon = 0.5 * pow(10, -5)
 
-''' метод половинного деления (дихотомии) '''
+'''метод половинного деления'''
 
 
 def check_sign(a, b):
     return a * b > 0
 
 
-def dichotomy(func, a, b):
+def half_division(func, a, b):
     c = b
     c_next = a
     count = 0
@@ -30,20 +30,18 @@ def dichotomy(func, a, b):
     return c, count
 
 
-x, count = dichotomy(f, -1.7, -1.6)
+x, iterations_count = half_division(f, -1.7, -1.6)
 
-print('дихотомия:  ' + str(x) + '  n: ' + str(count))
+print('половинное деление:  ' + str(x) + '  n: ' + str(iterations_count))
 
-'''__________________________________________________________________________________'''
-''' метод Ньютона '''
+'''Метод Ньютона '''
 
 
-def derivative(x):
+def f_derivative(x):
     return -(1/pow(math.sin(x + 2), 2)) - 2*x
 
 
-def newtons_method(f, a, b, derivative):
-    x0 = a
+def newton(f, x0, derivative):
     xn = x0
     xn1 = xn - f(xn) / derivative(xn)
     count = 1
@@ -54,16 +52,15 @@ def newtons_method(f, a, b, derivative):
     return xn1, count
 
 
-x_1, count = newtons_method(f, -1.7, -1.6, derivative)
+x, iterations_count = newton(f, -1.7, f_derivative)
 
-print('Ньютон:     ' + str(x_1) + '   n: ' + str(count))
-
-'''__________________________________________________________________________________'''
-''' модифицированный метод Ньютона'''
+print('Ньютон:     ' + str(x) + '   n: ' + str(iterations_count))
 
 
-def newtons_method_modified(f, a, b, derivative):
-    x0 = a
+'''Модифицированный метод Ньютона'''
+
+
+def newton_modified(f, x0, derivative):
     xn = x0
     derivative_x0 = derivative(x0)
     xn1 = xn - f(xn) / derivative_x0
@@ -75,15 +72,15 @@ def newtons_method_modified(f, a, b, derivative):
     return xn1, count
 
 
-x_2, count = newtons_method_modified(f, -1.7, -1.6, derivative)
+x, iterations_count = newton_modified(f, -1.7, f_derivative)
 
-print('Ньютон мод: ' + str(x_2) + '  n: ' + str(count))
-
-'''__________________________________________________________________________________'''
-''' метод подвижных хорд '''
+print('Ньютон мод: ' + str(x) + '  n: ' + str(iterations_count))
 
 
-def chords_active_method(f, a, b):
+'''Метод подвижных хорд '''
+
+
+def chords_move(f, a, b):
     x0 = a
     xn = b
     xn1 = xn - (f(xn) * (xn - x0)) / (f(xn) - f(x0))
@@ -96,15 +93,15 @@ def chords_active_method(f, a, b):
     return xn1, count
 
 
-x_3, count = chords_active_method(f, -1.7, -1.6)
+x, iterations_count = chords_move(f, -1.7, -1.6)
 
-print('хорд под:   ' + str(x_3) + '  n: ' + str(count))
-
-'''__________________________________________________________________________________'''
-''' метод неподвижных хорд '''
+print('хорд под:   ' + str(x) + '  n: ' + str(iterations_count))
 
 
-def chords_no_active_method(f, a, b):
+'''Метод неподвижных хорд '''
+
+
+def chords_no_move(f, a, b):
     x0 = a
     xn = b
     xn1 = xn - (f(xn) * (xn - x0)) / (f(xn) - f(x0))
@@ -116,14 +113,14 @@ def chords_no_active_method(f, a, b):
     return xn1, count
 
 
-x_4, count = chords_no_active_method(f, -1.7, -1.6)
+x, iterations_count = chords_no_move(f, -1.7, -1.6)
 
-print('хорд непод: ' + str(x_4) + '    n: ' + str(count))
+print('хорд непод: ' + str(x) + '    n: ' + str(iterations_count))
 
-''' метод простой итерации '''
+'''Метод простой итерации '''
 
-def iteration_method(fi, a, b):
-    x0 = a
+
+def iteration(fi, x0):
     xn = fi(x0)
     xn1 = fi(xn)
     count = 2
@@ -135,9 +132,9 @@ def iteration_method(fi, a, b):
 
 
 def fi(x):
-    return math.sqrt(1/math.tan(x+2))
+    return math.sqrt(1/math.tan(x + 2))
 
 
-x_5, count = iteration_method(fi, -1.7, -1.6)
+x, iterations_count = iteration(fi, -1.7)
 
-print('итерация:   ' + str(x_5) + '  n: ' + str(count))
+print('итерация:   ' + str(x) + '  n: ' + str(iterations_count))
